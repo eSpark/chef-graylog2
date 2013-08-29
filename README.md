@@ -12,6 +12,7 @@ This is a fork of the official Graylog2 chef repo, which makes several changes:
 * Use fnichol's rbenv recipe, which seems to work better
 * provide a template for the Rails secret_token, which is now required
   (attribute default[:graylog2][:secret_token])
+* Start work on sharing log directories across deployments
 
 
 Original Readme
