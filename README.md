@@ -1,6 +1,22 @@
 Description
 ===========
 
+This is a fork of the official Graylog2 chef repo, which makes several changes:
+
+* Bump the graylog2 web version to 0.12.0, the server to 0.13.0-rc1
+  * Points to the releases on Github
+* Use the official elasticsearch recipe, to take advantage of ebs/aws/other
+  features
+* Incorporate Unicorn as a server, adapting work found in one of the other
+  graylog2 repos and providing a few more config options
+* Use fnichol's rbenv recipe, which seems to work better
+* provide a template for the Rails secret_token, which is now required
+  (attribute default[:graylog2][:secret_token])
+
+
+Original Readme
+===============
+
 Installs and configures a Graylog2 server on Ubuntu systems (10.04 and up at present).
 
 This is a Chef re-engineering of the [Sean Porter][seanp] Linode [StackScript for graylog2][stackscript].
