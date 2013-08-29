@@ -2,6 +2,8 @@ default[:graylog2][:repo] = 'http://download.graylog2.org'
 default[:graylog2][:basedir] = "/var/graylog2"
 default[:graylog2][:server][:version] = "0.11.0"
 default[:graylog2][:web_interface][:version] = "0.12.0"
+default[:graylog2][:web_interface][:listen_port] = 80 # if this is not 80 you need to override default['apache']['listen_ports'] = [ "80" ]
+default[:graylog2][:web_interface][:log_path] = default[:graylog2][:basedir] + "/shared/web/log"
 
 default[:graylog2][:elasticsearch][:repo] = 'http://download.elasticsearch.org/elasticsearch/elasticsearch'
 default[:graylog2][:elasticsearch][:version] ="0.20.6"
@@ -35,3 +37,4 @@ default[:graylog2][:passenger_version] = "4.0.5"
 default[:graylog2][:unicorn][:worker_processes] = 1
 default[:graylog2][:unicorn][:timeout] = 30
 default[:graylog2][:unicorn][:preload_app] = true
+default[:graylog2][:unicorn][:pid_path] = default[:graylog2][:basedir] + "/shared/web/pids"

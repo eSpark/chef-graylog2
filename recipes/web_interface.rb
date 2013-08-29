@@ -45,6 +45,11 @@ directory "#{node[:graylog2][:basedir]}/rel" do
   recursive true
 end
 
+directory "#{node[:graylog2][:web_interface][:log_path]}" do
+  mode 0775
+  recursive true
+end
+
 # Download the desired version of Graylog2 web interface from GitHub
 remote_file "download_web_interface" do
   path "#{node[:graylog2][:basedir]}/rel/graylog2-web-interface-#{node[:graylog2][:web_interface][:version]}.tar.gz"
