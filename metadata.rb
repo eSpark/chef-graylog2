@@ -15,4 +15,5 @@ depends "rbenv"   # https://github.com/fnichol/chef-rbenv
 depends "ruby_build" # http://community.opscode.com/cookbooks/ruby_build
 depends "apache2" # http://community.opscode.com/cookbooks/apache2
 depends "apache2" # http://community.opscode.com/cookbooks/apache2
+depends "elasticsearch"
 depends "mongodb" # http://community.opscode.com/cookbooks/mongodb

@@ -48,4 +48,4 @@ amqp_virtualhost = /
 forwarder_loggly_timeout = 3
 
 # elastic search
-elasticsearch_config_file=/etc/elasticsearch/elasticsearch.yml
+elasticsearch_config_file=<%= node[:graylog2][:elasticsearch][:yml_path] %>

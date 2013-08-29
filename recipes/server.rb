@@ -21,6 +21,10 @@
 include_recipe "mongodb::10gen_repo"
 include_recipe "mongodb::default"
 
+# Install ElasticSearch
+include_recipe "elasticsearch"
+node.default[:elasticsearch][:bootstrap][:mlockall] = false
+
 # Install required APT packages
 package "openjdk-7-jre"
 
@@ -28,20 +32,6 @@ package "openjdk-7-jre"
 directory "#{node[:graylog2][:basedir]}/rel" do
   mode 0755
   recursive true
-end
-
-# Download the elasticsearch dpkg
-
-remote_file "elasticsearch_dpkg" do
-    path "#{node[:graylog2][:basedir]}/rel/elasticsearch-#{node[:graylog2][:elasticsearch][:version]}.deb"
-    source "#{node[:graylog2][:elasticsearch][:repo]}/elasticsearch-#{node[:graylog2][:elasticsearch][:version]}.deb"
-    action :create_if_missing
-end
-
-dpkg_package "elasticsearch" do
-    source "#{node[:graylog2][:basedir]}/rel/elasticsearch-#{node[:graylog2][:elasticsearch][:version]}.deb"
-    version node[:graylog2][:elasticsearch][:version]
-    action :install
 end
 
 # Download the desired version of Graylog2 server from GitHub
@@ -83,13 +73,13 @@ execute "update-rc.d graylog2 defaults" do
   subscribes :run, resources(:template => "/etc/init.d/graylog2"), :immediately
 end
 
-# Service resource
+# Start elasticsearch
 service "elasticsearch" do
   supports :restart => true
   action [:enable, :start]
 end
 
-# Service resource
+# Start graylog2
 service "graylog2" do
   supports :restart => true
   action [:enable, :start]
