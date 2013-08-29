@@ -101,6 +101,13 @@ end
   end
 end
 
+# set up the secret - this should go to an attribute later
+template "#{node[:graylog2][:basedir]}/web/config/initializers/secret_token.rb" do
+  owner "nobody"
+  group "nogroup"
+  mode 0644
+end
+
 # Chown the Graylog2 directory to nobody/nogroup to allow web servers to serve it
 execute "sudo chown -R nobody:nogroup graylog2-web-interface-#{node[:graylog2][:web_interface][:version]}" do
   cwd "#{node[:graylog2][:basedir]}/rel"
