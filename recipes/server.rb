@@ -22,8 +22,13 @@ include_recipe "mongodb::10gen_repo"
 include_recipe "mongodb::default"
 
 # Install ElasticSearch
-include_recipe "elasticsearch"
 node.default[:elasticsearch][:bootstrap][:mlockall] = false
+include_recipe "elasticsearch"
+if node[:elasticsearch][:data]
+  include_recipe "elasticsearch::data"
+  include_recipe "elasticsearch::ebs"
+end
+
 
 # Install required APT packages
 package "openjdk-7-jre"
