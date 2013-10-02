@@ -1,4 +1,3 @@
-#
 # Cookbook Name:: graylog2
 # Recipe:: server
 #
@@ -22,14 +21,18 @@ include_recipe "mongodb::10gen_repo"
 include_recipe "mongodb::default"
 
 # Install ElasticSearch
-node.default[:elasticsearch][:version] = "0.20.6"
+# really use 0.20.6 -- annoying we have to override all of these
+node.override[:elasticsearch][:version] = "0.20.6"
+node.override[:elasticsearch][:filename] = "elasticsearch-#{node.elasticsearch[:version]}.tar.gz"
+node.override[:elasticsearch][:download_url]  = [node.elasticsearch[:host], node.elasticsearch[:repository], node.elasticsearch[:filename]].join('/')
+
 node.default[:elasticsearch][:bootstrap][:mlockall] = false
 include_recipe "elasticsearch"
+log "Elasticsearch!!! #{node[:elasticsearch][:filename]}"
 if node[:elasticsearch][:data]
   include_recipe "elasticsearch::data"
   include_recipe "elasticsearch::ebs"
 end
-
 
 # Install required APT packages
 package "openjdk-7-jre"
