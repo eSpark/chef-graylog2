@@ -36,13 +36,24 @@ template "#{node[:graylog2][:basedir]}/web/config/unicorn.rb" do
 end
 
 directory "#{node[:graylog2][:unicorn][:pid_path]}" do
-  mode 0755
+  mode 0666
   recursive true
+  owner "nobody"
 end
 
-bash "graylog2 start unicorn" do
-  cwd "#{node[:graylog2][:basedir]}/web"
-  environment "RAILS_ENV" => "production"
-  # pkill unicorn may not be ideal, but it works for now
-  code "pkill unicorn; source /etc/profile.d/rbenv.sh && unicorn -p #{node.graylog2.web_interface.listen_port} -c ./config/unicorn.rb -D"
+# set unicorn to start on boot
+rails_root = "#{node[:graylog2][:basedir]}/web"
+template "/etc/init.d/graylog2_unicorn" do
+  source "graylog2_unicorn.init.erb"
+  mode 0755
+  variables({
+    rails_root: rails_root,
+    pid_path: node[:graylog2][:unicorn][:pid_path],
+    unicorn_port: node.graylog2.web_interface.listen_port
+  })
 end
+
+service "graylog2_unicorn" do
+  action :start
+end
+
