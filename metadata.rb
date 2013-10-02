@@ -11,7 +11,7 @@ supports "ubuntu"
 
 # OpsCode cookbook dependencies
 depends "apt"     # http://community.opscode.com/cookbooks/apt
-depends "rbenv"   # https://github.com/fnichol/chef-rbenv
+depends "rbenv"      # http://community.opscode.com/cookbooks/rbenv
 depends "ruby_build" # http://community.opscode.com/cookbooks/ruby_build
 depends "apache2" # http://community.opscode.com/cookbooks/apache2
 depends "apache2" # http://community.opscode.com/cookbooks/apache2
