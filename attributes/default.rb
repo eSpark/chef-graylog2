@@ -5,7 +5,7 @@ default[:graylog2][:web_interface][:version] = "0.12.0"
 default[:graylog2][:web_interface][:listen_port] = 80 # if this is not 80 you need to override default['apache']['listen_ports'] = [ "80" ]
 default[:graylog2][:web_interface][:log_path] = default[:graylog2][:basedir] + "/shared/web/log"
 
-default[:graylog2][:elasticsearch][:yml_path] = " /usr/local/etc/elasticsearch/elasticsearch.yml "
+default[:graylog2][:elasticsearch][:yml_path] = "/etc/graylog2-elasticsearch.yml"
 
 default[:graylog2][:mongodb][:host] = "localhost"
 default[:graylog2][:mongodb][:port] = 27017
