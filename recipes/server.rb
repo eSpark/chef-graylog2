@@ -1,4 +1,3 @@
-#
 # Cookbook Name:: graylog2
 # Recipe:: server
 #
@@ -22,13 +21,17 @@ include_recipe "mongodb::10gen_repo"
 include_recipe "mongodb::default"
 
 # Install ElasticSearch
+# really use 0.20.6 -- annoying we have to override all of these
+node.override[:elasticsearch][:version] = "0.20.6"
+node.override[:elasticsearch][:filename] = "elasticsearch-#{node.elasticsearch[:version]}.tar.gz"
+node.override[:elasticsearch][:download_url]  = [node.elasticsearch[:host], node.elasticsearch[:repository], node.elasticsearch[:filename]].join('/')
+
 node.default[:elasticsearch][:bootstrap][:mlockall] = false
 include_recipe "elasticsearch"
 if node[:elasticsearch][:data]
   include_recipe "elasticsearch::data"
   include_recipe "elasticsearch::ebs"
 end
-
 
 # Install required APT packages
 package "openjdk-7-jre"
@@ -62,6 +65,12 @@ end
 
 # Create graylog2.conf
 template "/etc/graylog2.conf" do
+  mode 0644
+  notifies :restart, "service[graylog2]"
+end
+
+# Create graylog2-elasticsearch.yml
+template node[:graylog2][:elasticsearch][:yml_path] do
   mode 0644
   notifies :restart, "service[graylog2]"
 end
