@@ -28,7 +28,6 @@ node.override[:elasticsearch][:download_url]  = [node.elasticsearch[:host], node
 
 node.default[:elasticsearch][:bootstrap][:mlockall] = false
 include_recipe "elasticsearch"
-log "Elasticsearch!!! #{node[:elasticsearch][:filename]}"
 if node[:elasticsearch][:data]
   include_recipe "elasticsearch::data"
   include_recipe "elasticsearch::ebs"
