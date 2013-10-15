@@ -94,6 +94,11 @@ service "elasticsearch" do
   action [:enable, :start]
 end
 
+# Start Mongo
+service "mongodb" do
+  action [:enable, :start]
+end
+
 # Start graylog2
 service "graylog2" do
   supports :restart => true
